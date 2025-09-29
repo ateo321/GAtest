@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
             <h1>🚀 GitHub Actions Demo</h1>
             <div class="status">
               <h2>✅ App đang chạy!</h2>
-              <p>Ứng dụng đã được deploy thành công lên Railway.</p>
+              <p>Ứng dụng đã được deploy thành công lên Railway!!!.</p>
               <p><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</p>
               <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
             </div>
