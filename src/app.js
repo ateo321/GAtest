@@ -41,8 +41,52 @@ app.get('/', (req, res) => {
       environment: process.env.NODE_ENV || 'development'
     });
   } else {
-    // Serve the main HTML page for browsers
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+    // Try to serve the main HTML page for browsers
+    const htmlPath = path.join(__dirname, '../public/index.html');
+    
+    // Check if file exists
+    const fs = require('fs');
+    if (fs.existsSync(htmlPath)) {
+      res.sendFile(htmlPath);
+    } else {
+      // Fallback to a simple HTML response if file doesn't exist
+      res.send(`
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>GitHub Actions Demo</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+            .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+            h1 { color: #333; text-align: center; }
+            .status { background: #e8f5e8; padding: 20px; border-radius: 5px; margin: 20px 0; }
+            .api-links { margin: 20px 0; }
+            .api-links a { display: inline-block; margin: 10px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+            .api-links a:hover { background: #0056b3; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>🚀 GitHub Actions Demo</h1>
+            <div class="status">
+              <h2>✅ App đang chạy!</h2>
+              <p>Ứng dụng đã được deploy thành công lên Railway.</p>
+              <p><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</p>
+              <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+            </div>
+            <div class="api-links">
+              <h3>🔗 Test API Endpoints:</h3>
+              <a href="/health">Health Check</a>
+              <a href="/api/users">Users API</a>
+              <a href="/?format=json">JSON Response</a>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+    }
   }
 });
 
