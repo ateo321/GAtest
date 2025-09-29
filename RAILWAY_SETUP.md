@@ -17,34 +17,32 @@
    - Railway sẽ tự động detect Node.js app
    - Lưu lại **Project ID** và **Service name**
 
-### 2. Tạo Railway Token
+### 2. Railway Project Setup
 
-1. **Vào Account Settings**
-   - Click avatar → **Settings**
-   - Chọn **"Tokens"**
+1. **Tạo Railway Project**
+   - [railway.app](https://railway.app) → **New Project**
+   - **Deploy from GitHub repo**
+   - Chọn `ateo321/GAtest`
 
-2. **Tạo token mới**
-   - Click **"New Token"**
-   - Đặt tên: `GitHub Actions Deploy`
-   - Copy token (chỉ hiện 1 lần!)
+2. **Railway tự động setup**
+   - Auto-detect Node.js app
+   - Setup webhook với GitHub
+   - Cung cấp public URL
 
-### 3. GitHub Actions Auto-Deploy
+### 3. Railway Webhook Auto-Deploy
 
-**Để có auto-deploy qua GitHub Actions:**
+**Railway tự động deploy qua webhook (Không cần GitHub Actions):**
 
-1. **Vào GitHub Repository**
-   - `https://github.com/ateo321/GAtest`
-   - Click **Settings** → **Secrets and variables** → **Actions**
+1. **Railway tự động connect:**
+   - Railway sẽ tự động connect với GitHub repo
+   - Webhook được setup tự động
+   - Không cần cấu hình thêm
 
-2. **Thêm secret:**
-   - Name: `RAILWAY_TOKEN`
-   - Value: Token từ bước 2
-
-3. **Workflow sẽ tự động:**
-   - ✅ Chạy tests trước khi deploy
-   - ✅ Deploy lên Railway khi push to main
-   - ✅ Hiển thị Railway URL trong summary
-   - ✅ Fallback guide nếu chưa có token
+2. **Auto-deploy features:**
+   - ✅ Tự động deploy khi push to main
+   - ✅ Không cần GitHub Actions
+   - ✅ Railway webhook trigger
+   - ✅ Simple và reliable
 
 ### 4. Test Auto-Deploy
 

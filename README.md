@@ -9,7 +9,7 @@ Dự án demo này minh họa cách sử dụng GitHub Actions để xây dựng
 - **Ứng dụng Express.js** đơn giản với API endpoints
 - **GitHub Actions CI/CD** pipeline hoàn chỉnh
 - **Docker containerization** 
-- **Railway auto-deployment** với GitHub Actions
+- **Railway auto-deployment** với webhook integration
 - **Automated testing** với Jest
 - **Code linting** với ESLint
 - **Security scanning** với Trivy
@@ -122,6 +122,37 @@ Test Docker image:
 | GET | `/health` | Health check endpoint |
 | GET | `/api/users` | Lấy danh sách users |
 | GET | `/api/users/:id` | Lấy thông tin user theo ID |
+
+## 🚂 Railway Deployment
+
+### Auto-Deploy via Railway Webhook
+- **Method**: Railway webhook integration
+- **Trigger**: Push to `main` branch
+- **Features**:
+  - ✅ Automatic deployment on every push
+  - ✅ No GitHub Actions required
+  - ✅ Direct integration with Railway
+  - ✅ Simple and reliable
+
+### Setup Railway (One-time)
+1. **Create Railway Project**:
+   - Go to [railway.app](https://railway.app) → New Project
+   - **Deploy from GitHub repo** → Select `ateo321/GAtest`
+   - Railway will automatically connect to your repository
+
+2. **Configure Environment**:
+   - Railway will auto-detect Node.js app
+   - Set `NODE_ENV=production` (optional)
+   - Railway handles all deployment automatically
+
+3. **Get Your URL**:
+   - Railway provides a public URL after first deployment
+   - Check Railway dashboard for your app URL
+
+### Railway URLs
+- **Production**: https://comfortable-caring-production.up.railway.app/
+- **Health Check**: https://comfortable-caring-production.up.railway.app/health
+- **API**: https://comfortable-caring-production.up.railway.app/api/users
 
 ## 🔧 Environment Variables
 
