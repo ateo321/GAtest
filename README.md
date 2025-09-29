@@ -9,6 +9,7 @@ Dự án demo này minh họa cách sử dụng GitHub Actions để xây dựng
 - **Ứng dụng Express.js** đơn giản với API endpoints
 - **GitHub Actions CI/CD** pipeline hoàn chỉnh
 - **Docker containerization** 
+- **Railway auto-deployment** với GitHub Actions
 - **Automated testing** với Jest
 - **Code linting** với ESLint
 - **Security scanning** với Trivy
