@@ -32,15 +32,20 @@ jobs:
     - name: Install Railway CLI
       run: npm install -g @railway/cli
       
+    - name: Login to Railway
+      run: |
+        echo "🔐 Logging into Railway..."
+        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login
+        echo "✅ Logged in successfully!"
+        
     - name: Deploy to Railway
       run: |
         echo "🚂 Deploying to Railway..."
-        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login
         railway up --detach
         echo "✅ Deployment completed!"
         
-    - name: Get deployment URL
+    - name: Get deployment info
       run: |
-        echo "🔗 Getting deployment URL..."
+        echo "🔗 Getting deployment information..."
         railway status
         echo "✅ Check Railway dashboard for deployment URL"

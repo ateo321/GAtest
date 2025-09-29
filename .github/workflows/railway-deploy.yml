@@ -74,7 +74,7 @@ jobs:
     - name: Deploy to Railway Staging
       run: |
         echo "🚂 Deploying to Railway Staging..."
-        railway login --token ${{ secrets.RAILWAY_TOKEN }}
+        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login
         railway link ${{ secrets.RAILWAY_PROJECT_ID }}
         railway up --detach --service staging
         echo "✅ Staging deployment completed!"
@@ -112,7 +112,7 @@ jobs:
     - name: Deploy to Railway Production
       run: |
         echo "🚂 Deploying to Railway Production..."
-        railway login --token ${{ secrets.RAILWAY_TOKEN }}
+        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login
         railway link ${{ secrets.RAILWAY_PROJECT_ID }}
         railway up --detach --service production
         echo "✅ Production deployment completed!"
