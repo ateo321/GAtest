@@ -1,16 +1,13 @@
-name: Railway Deploy
+name: Railway Simple Deploy
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
-env:
-  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
 jobs:
-  test:
-    name: Test
+  prepare:
+    name: Prepare for Railway
     runs-on: ubuntu-latest
     
     steps:
@@ -31,37 +28,29 @@ jobs:
       
     - name: Run tests
       run: npm test
-
-  deploy:
-    name: Deploy to Railway
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
       
-    - name: Deploy to Railway
-      uses: railwayapp/railway-deploy@v1
-      with:
-        railway-token: ${{ secrets.RAILWAY_TOKEN }}
-        service: ${{ secrets.RAILWAY_SERVICE }}
-        
-    - name: Deployment success
+    - name: Railway deployment guide
       run: |
-        echo "## 🚂 Railway Deployment Complete" >> $GITHUB_STEP_SUMMARY
+        echo "## 🚂 Railway Deployment Guide" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Status:** ✅ Successfully deployed to Railway" >> $GITHUB_STEP_SUMMARY
+        echo "**Status:** ✅ All tests passed - Ready for Railway deployment" >> $GITHUB_STEP_SUMMARY
         echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
         echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
         echo "**Author:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Time:** $(date)" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🌐 Your app is now live on Railway!" >> $GITHUB_STEP_SUMMARY
-        echo "Check your Railway dashboard for the deployment URL." >> $GITHUB_STEP_SUMMARY
+        echo "### 🔧 Setup Railway (One-time):" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [railway.app](https://railway.app)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Create new project from GitHub repo" >> $GITHUB_STEP_SUMMARY
+        echo "3. Select this repository: ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "4. Railway will auto-deploy on every push!" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🔗 Test your deployment:" >> $GITHUB_STEP_SUMMARY
-        echo "- Main page: `https://your-app.railway.app/`" >> $GITHUB_STEP_SUMMARY
-        echo "- Health check: `https://your-app.railway.app/health`" >> $GITHUB_STEP_SUMMARY
+        echo "### ⚙️ Environment Variables:" >> $GITHUB_STEP_SUMMARY
+        echo "- NODE_ENV=production" >> $GITHUB_STEP_SUMMARY
+        echo "- PORT=3000 (auto-set by Railway)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🌐 After Railway setup:" >> $GITHUB_STEP_SUMMARY
+        echo "Railway will provide a public URL for your app!" >> $GITHUB_STEP_SUMMARY
+        echo "Test endpoints:" >> $GITHUB_STEP_SUMMARY
+        echo "- Main: `https://your-app.railway.app/`" >> $GITHUB_STEP_SUMMARY
+        echo "- Health: `https://your-app.railway.app/health`" >> $GITHUB_STEP_SUMMARY
         echo "- API: `https://your-app.railway.app/api/users`" >> $GITHUB_STEP_SUMMARY
