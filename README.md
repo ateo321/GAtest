@@ -2,6 +2,8 @@
 
 Dự án demo này minh họa cách sử dụng GitHub Actions để xây dựng một pipeline CI/CD hoàn chỉnh cho ứng dụng Node.js/Express.
 
+> **Update:** Đã clean up workflows và simplified deployment process - v1.0.1
+
 ## 🚀 Tính năng
 
 - **Ứng dụng Express.js** đơn giản với API endpoints
