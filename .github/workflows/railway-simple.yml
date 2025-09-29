@@ -35,7 +35,8 @@ jobs:
     - name: Deploy to Railway
       run: |
         echo "🚂 Deploying to Railway..."
-        echo "${{ secrets.RAILWAY_TOKEN }}" | railway login
+        export RAILWAY_TOKEN="${{ secrets.RAILWAY_TOKEN }}"
+        railway login
         railway up --detach
         echo "✅ Deployment completed!"
         
