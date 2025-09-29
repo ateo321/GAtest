@@ -90,29 +90,28 @@ curl http://localhost:3000/health
 
 ## 🔄 GitHub Actions Workflows
 
-### 1. CI Pipeline (`.github/workflows/ci.yml`)
-Chạy khi có push/PR vào branch `main` hoặc `develop`:
+### 1. Main CI/CD Pipeline (`.github/workflows/main.yml`)
+Chạy khi có push/PR vào branch `main` hoặc tạo tag:
 
-- **Test**: Chạy tests trên Node.js 18.x và 20.x
+- **Test**: Chạy tests trên Node.js 20.x
 - **Lint**: Kiểm tra code style với ESLint
-- **Build**: Tạo build artifacts
+- **Build**: Tạo Docker image và push lên GitHub Container Registry
+- **Release**: Tự động tạo GitHub Release khi tạo tag
 - **Security Scan**: Quét lỗ hổng bảo mật với Trivy
-- **Coverage**: Upload coverage report lên Codecov
 
-### 2. CD Pipeline (`.github/workflows/cd.yml`)
-Chạy khi push vào `main` hoặc tạo tag:
+### 2. Railway Webhook Deploy (`.github/workflows/railway-webhook.yml`)
+Chạy khi push vào `main` branch:
 
-- **Build & Push**: Tạo Docker image và push lên GitHub Container Registry
-- **Deploy Staging**: Tự động deploy lên staging environment
-- **Deploy Production**: Deploy lên production khi tạo tag
-- **Release**: Tự động tạo GitHub Release
+- **Test**: Chạy tests trước khi deploy
+- **Notify**: Thông báo Railway webhook deployment
+- **Status**: Hiển thị deployment status và hướng dẫn
 
-### 3. Docker Pipeline (`.github/workflows/docker.yml`)
-Test Docker image:
+### 3. Railway Setup Guide (`.github/workflows/railway-setup.yml`)
+Chạy thủ công để hướng dẫn setup Railway:
 
-- **Build**: Build Docker image
-- **Test**: Test image có chạy được không
-- **Health Check**: Kiểm tra health endpoint
+- **Guide**: Hướng dẫn setup Railway project
+- **Check**: Kiểm tra trạng thái Railway
+- **Test**: Test Railway integration
 
 ## 🌐 API Endpoints
 

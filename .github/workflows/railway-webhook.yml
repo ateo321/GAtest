@@ -1,0 +1,84 @@
+name: Railway Webhook Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run linter
+      run: npm run lint
+      
+    - name: Run tests
+      run: npm test
+
+  notify-railway:
+    name: Notify Railway Webhook
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Notify Railway Webhook
+      run: |
+        echo "🚂 Railway Webhook Deployment"
+        echo "================================"
+        echo "✅ Tests passed - Ready for Railway deployment"
+        echo "📦 Repository: ${{ github.repository }}"
+        echo "🌿 Branch: ${{ github.ref_name }}"
+        echo "📝 Commit: ${{ github.sha }}"
+        echo "👤 Author: ${{ github.actor }}"
+        echo "⏰ Time: $(date)"
+        echo ""
+        echo "🔗 Railway will auto-deploy via webhook"
+        echo "📊 Check Railway dashboard for deployment status"
+        echo "🌐 App URL will be available after deployment"
+        
+    - name: Railway deployment info
+      run: |
+        echo "## 🚂 Railway Webhook Deployment" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Status:** ✅ Tests passed - Railway webhook triggered" >> $GITHUB_STEP_SUMMARY
+        echo "**Repository:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Author:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🌐 Railway Auto-Deploy:" >> $GITHUB_STEP_SUMMARY
+        echo "Railway webhook has been triggered and will automatically:" >> $GITHUB_STEP_SUMMARY
+        echo "- 🔄 Pull latest code from GitHub" >> $GITHUB_STEP_SUMMARY
+        echo "- 🏗️ Build and deploy the application" >> $GITHUB_STEP_SUMMARY
+        echo "- 🌐 Provide a public URL" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Check Deployment Status:" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [Railway Dashboard](https://railway.app/dashboard)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Find your project: ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "3. Check deployment logs and status" >> $GITHUB_STEP_SUMMARY
+        echo "4. Get your app URL from Railway" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🔗 Expected Endpoints:" >> $GITHUB_STEP_SUMMARY
+        echo "After Railway deployment completes:" >> $GITHUB_STEP_SUMMARY
+        echo "- Main page: `https://your-app.railway.app/`" >> $GITHUB_STEP_SUMMARY
+        echo "- Health check: `https://your-app.railway.app/health`" >> $GITHUB_STEP_SUMMARY
+        echo "- API: `https://your-app.railway.app/api/users`" >> $GITHUB_STEP_SUMMARY

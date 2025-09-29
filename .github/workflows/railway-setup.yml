@@ -1,0 +1,112 @@
+name: Railway Setup Guide
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'guide'
+        type: choice
+        options:
+        - guide
+        - check
+        - test
+
+jobs:
+  setup-guide:
+    name: Railway Setup Guide
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Railway Setup Guide
+      if: github.event.inputs.action == 'guide'
+      run: |
+        echo "## 🚂 Railway Setup Guide" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📋 Step-by-step setup:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 1. Create Railway Project" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [railway.app](https://railway.app)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Click **New Project**" >> $GITHUB_STEP_SUMMARY
+        echo "3. Select **Deploy from GitHub repo**" >> $GITHUB_STEP_SUMMARY
+        echo "4. Choose repository: \`${{ github.repository }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "5. Railway will automatically connect and setup webhook" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 2. Configure Environment (Optional)" >> $GITHUB_STEP_SUMMARY
+        echo "1. In Railway Dashboard → **Variables**" >> $GITHUB_STEP_SUMMARY
+        echo "2. Add \`NODE_ENV=production\` (if needed)" >> $GITHUB_STEP_SUMMARY
+        echo "3. Railway auto-detects Node.js app" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 3. Get Your App URL" >> $GITHUB_STEP_SUMMARY
+        echo "1. Railway Dashboard → **Deployments**" >> $GITHUB_STEP_SUMMARY
+        echo "2. Copy the public URL" >> $GITHUB_STEP_SUMMARY
+        echo "3. Test your endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ After Setup:" >> $GITHUB_STEP_SUMMARY
+        echo "- Railway will auto-deploy on every push to main" >> $GITHUB_STEP_SUMMARY
+        echo "- No GitHub Actions needed for Railway" >> $GITHUB_STEP_SUMMARY
+        echo "- Webhook handles everything automatically" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🔗 Test Your Deployment:" >> $GITHUB_STEP_SUMMARY
+        echo "After Railway deployment completes:" >> $GITHUB_STEP_SUMMARY
+        echo "- Main page: \`https://your-app.railway.app/\`" >> $GITHUB_STEP_SUMMARY
+        echo "- Health check: \`https://your-app.railway.app/health\`" >> $GITHUB_STEP_SUMMARY
+        echo "- API: \`https://your-app.railway.app/api/users\`" >> $GITHUB_STEP_SUMMARY
+
+    - name: Check Railway Status
+      if: github.event.inputs.action == 'check'
+      run: |
+        echo "## 🔍 Railway Status Check" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Current Status:" >> $GITHUB_STEP_SUMMARY
+        echo "- **Repository:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚂 Railway Integration:" >> $GITHUB_STEP_SUMMARY
+        echo "To check Railway status:" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [Railway Dashboard](https://railway.app/dashboard)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Find your project: ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "3. Check deployment status and logs" >> $GITHUB_STEP_SUMMARY
+        echo "4. Verify webhook is working" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🔗 Expected URLs:" >> $GITHUB_STEP_SUMMARY
+        echo "If Railway is properly configured:" >> $GITHUB_STEP_SUMMARY
+        echo "- App should be accessible via Railway URL" >> $GITHUB_STEP_SUMMARY
+        echo "- Health endpoint should return 200 OK" >> $GITHUB_STEP_SUMMARY
+        echo "- API endpoints should be functional" >> $GITHUB_STEP_SUMMARY
+
+    - name: Test Railway Integration
+      if: github.event.inputs.action == 'test'
+      run: |
+        echo "## 🧪 Railway Integration Test" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🔍 Testing Steps:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 1. Check Railway Project" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [Railway Dashboard](https://railway.app/dashboard)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Verify project exists: ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+        echo "3. Check if webhook is connected" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 2. Test Deployment" >> $GITHUB_STEP_SUMMARY
+        echo "1. Make a small change to this repository" >> $GITHUB_STEP_SUMMARY
+        echo "2. Push to main branch" >> $GITHUB_STEP_SUMMARY
+        echo "3. Check if Railway auto-deploys" >> $GITHUB_STEP_SUMMARY
+        echo "4. Verify app is accessible" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "#### 3. Verify Endpoints" >> $GITHUB_STEP_SUMMARY
+        echo "After deployment, test these URLs:" >> $GITHUB_STEP_SUMMARY
+        echo "- \`GET /\` - Main page" >> $GITHUB_STEP_SUMMARY
+        echo "- \`GET /health\` - Health check" >> $GITHUB_STEP_SUMMARY
+        echo "- \`GET /api/users\` - API endpoint" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### ✅ Success Criteria:" >> $GITHUB_STEP_SUMMARY
+        echo "- Railway project exists and is connected" >> $GITHUB_STEP_SUMMARY
+        echo "- Webhook triggers on push to main" >> $GITHUB_STEP_SUMMARY
+        echo "- App deploys successfully" >> $GITHUB_STEP_SUMMARY
+        echo "- All endpoints return expected responses" >> $GITHUB_STEP_SUMMARY
