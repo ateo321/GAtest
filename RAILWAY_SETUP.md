@@ -28,18 +28,23 @@
    - Đặt tên: `GitHub Actions Deploy`
    - Copy token (chỉ hiện 1 lần!)
 
-### 3. GitHub Actions (Optional)
+### 3. GitHub Actions Auto-Deploy
 
-**Lưu ý:** Railway có thể auto-deploy mà không cần GitHub Actions!
+**Để có auto-deploy qua GitHub Actions:**
 
-Nếu muốn sử dụng GitHub Actions:
 1. **Vào GitHub Repository**
    - `https://github.com/ateo321/GAtest`
    - Click **Settings** → **Secrets and variables** → **Actions**
 
-2. **Thêm secrets (nếu cần):**
-   - `RAILWAY_TOKEN`: Token từ bước 2
-   - `RAILWAY_SERVICE`: Service name từ Railway project
+2. **Thêm secret:**
+   - Name: `RAILWAY_TOKEN`
+   - Value: Token từ bước 2
+
+3. **Workflow sẽ tự động:**
+   - ✅ Chạy tests trước khi deploy
+   - ✅ Deploy lên Railway khi push to main
+   - ✅ Hiển thị Railway URL trong summary
+   - ✅ Fallback guide nếu chưa có token
 
 ### 4. Test Auto-Deploy
 
