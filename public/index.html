@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Actions Demo - CI/CD Pipeline</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fab fa-github"></i>
+                <span>GitHub Actions Demo</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Trang chủ</a>
+                <a href="#features" class="nav-link">Tính năng</a>
+                <a href="#api" class="nav-link">API</a>
+                <a href="#deployment" class="nav-link">Deployment</a>
+            </div>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">GitHub Actions</span>
+                    <br>CI/CD Pipeline Demo
+                </h1>
+                <p class="hero-description">
+                    Dự án demo minh họa cách sử dụng GitHub Actions để xây dựng pipeline CI/CD hoàn chỉnh 
+                    cho ứng dụng Node.js/Express với Docker containerization.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('api')">
+                        <i class="fas fa-rocket"></i>
+                        Khám phá API
+                    </button>
+                    <button class="btn btn-secondary" onclick="openGitHub()">
+                        <i class="fab fa-github"></i>
+                        Xem trên GitHub
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="pipeline-animation">
+                    <div class="pipeline-step">
+                        <i class="fas fa-code"></i>
+                        <span>Code</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <i class="fas fa-vial"></i>
+                        <span>Test</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <i class="fab fa-docker"></i>
+                        <span>Build</span>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <i class="fas fa-rocket"></i>
+                        <span>Deploy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Tính năng nổi bật</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>CI/CD Pipeline</h3>
+                    <p>Pipeline hoàn chỉnh với testing, building, security scanning và automated deployment</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fab fa-docker"></i>
+                    </div>
+                    <h3>Docker Containerization</h3>
+                    <p>Container hóa ứng dụng với Docker, hỗ trợ multi-stage builds và security best practices</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Scanning</h3>
+                    <p>Quét lỗ hổng bảo mật tự động với Trivy và các công cụ security khác</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Multi-Environment</h3>
+                    <p>Deploy tự động lên staging và production với environment protection rules</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Monitoring</h3>
+                    <p>Health checks, logging và monitoring tích hợp sẵn</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Git Integration</h3>
+                    <p>Tích hợp sâu với Git, hỗ trợ branch protection và automated releases</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="api">
+        <div class="container">
+            <h2 class="section-title">API Endpoints</h2>
+            <div class="api-grid">
+                <div class="api-card">
+                    <div class="api-method get">GET</div>
+                    <div class="api-content">
+                        <h3>/</h3>
+                        <p>Trang chủ với thông tin ứng dụng</p>
+                        <button class="btn btn-sm" onclick="testAPI('/')">Test API</button>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <div class="api-method get">GET</div>
+                    <div class="api-content">
+                        <h3>/health</h3>
+                        <p>Health check endpoint</p>
+                        <button class="btn btn-sm" onclick="testAPI('/health')">Test API</button>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <div class="api-method get">GET</div>
+                    <div class="api-content">
+                        <h3>/api/users</h3>
+                        <p>Lấy danh sách users</p>
+                        <button class="btn btn-sm" onclick="testAPI('/api/users')">Test API</button>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <div class="api-method get">GET</div>
+                    <div class="api-content">
+                        <h3>/api/users/:id</h3>
+                        <p>Lấy thông tin user theo ID</p>
+                        <button class="btn btn-sm" onclick="testAPI('/api/users/1')">Test API</button>
+                    </div>
+                </div>
+            </div>
+            <div id="api-result" class="api-result"></div>
+        </div>
+    </section>
+
+    <!-- Deployment Section -->
+    <section id="deployment" class="deployment">
+        <div class="container">
+            <h2 class="section-title">Deployment Status</h2>
+            <div class="deployment-grid">
+                <div class="deployment-card">
+                    <h3><i class="fas fa-server"></i> Server Status</h3>
+                    <div class="status-indicator" id="server-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Checking...</span>
+                    </div>
+                    <p>Kiểm tra trạng thái server và health check</p>
+                </div>
+                <div class="deployment-card">
+                    <h3><i class="fab fa-docker"></i> Docker Status</h3>
+                    <div class="status-indicator" id="docker-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Checking...</span>
+                    </div>
+                    <p>Trạng thái Docker container và image</p>
+                </div>
+                <div class="deployment-card">
+                    <h3><i class="fas fa-code-branch"></i> Git Status</h3>
+                    <div class="status-indicator" id="git-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Checking...</span>
+                    </div>
+                    <p>Thông tin commit và branch hiện tại</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GitHub Actions Demo</h3>
+                    <p>Dự án demo minh họa CI/CD pipeline với GitHub Actions</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <ul>
+                        <li><a href="https://github.com/ateo321/GAtest" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://docs.github.com/en/actions" target="_blank">GitHub Actions Docs</a></li>
+                        <li><a href="https://docs.docker.com/" target="_blank">Docker Docs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Tech Stack</h3>
+                    <ul>
+                        <li>Node.js & Express</li>
+                        <li>GitHub Actions</li>
+                        <li>Docker</li>
+                        <li>Jest Testing</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 GitHub Actions Demo. Built with ❤️ and GitHub Actions.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
