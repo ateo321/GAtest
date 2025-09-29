@@ -1,0 +1,68 @@
+name: Simple Deploy
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to production
+      run: |
+        echo "🚀 Deploying version ${{ github.ref_name }} to production..."
+        echo "Repository: ${{ github.repository }}"
+        echo "Tag: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "✅ Production deployment completed!"
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        body: |
+          ## 🚀 Release ${{ github.ref_name }}
+          
+          **Repository:** ${{ github.repository }}  
+          **Commit:** ${{ github.sha }}  
+          **Date:** ${{ github.event.head_commit.timestamp }}
+          
+          ## 📦 What's New
+          
+          - Automated deployment to production
+          - GitHub Actions CI/CD pipeline
+          - Docker containerization
+          
+          ## 🛠️ How to Use
+          
+          ```bash
+          # Clone the repository
+          git clone https://github.com/${{ github.repository }}.git
+          cd ${{ github.repository }}
+          
+          # Install dependencies
+          npm install
+          
+          # Run the application
+          npm start
+          ```
+          
+          ## 🐳 Docker
+          
+          ```bash
+          # Build Docker image
+          docker build -t github-actions-demo:${{ github.ref_name }} .
+          
+          # Run container
+          docker run -p 3000:3000 github-actions-demo:${{ github.ref_name }}
+          ```
+        draft: false
+        prerelease: false
