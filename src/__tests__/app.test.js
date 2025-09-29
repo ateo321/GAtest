@@ -3,14 +3,26 @@ const app = require('../app');
 
 describe('API Tests', () => {
   describe('GET /', () => {
-    it('should return welcome message', async () => {
-      const response = await request(app).get('/');
+    it('should return welcome message for API requests', async () => {
+      const response = await request(app)
+        .get('/?format=json')
+        .set('Accept', 'application/json');
       
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('message');
       expect(response.body).toHaveProperty('version');
       expect(response.body).toHaveProperty('timestamp');
       expect(response.body.message).toContain('Chào mừng');
+    });
+
+    it('should return HTML page for browser requests', async () => {
+      const response = await request(app)
+        .get('/')
+        .set('Accept', 'text/html');
+      
+      expect(response.status).toBe(200);
+      expect(response.text).toContain('<!DOCTYPE html>');
+      expect(response.text).toContain('GitHub Actions Demo');
     });
   });
 
